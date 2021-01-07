@@ -15,9 +15,9 @@ help:
 	@echo "Targets:"
 	@echo "  all         - install and configure"
 	@echo "                this basically just combines 'setup' followed by 'configure'"
-	@echo "  setup       - configure raspbian"
-	@echo "  configure   - configure retropie (this also includes the initial scrape)"
-	@echo "  scrape      - only scrape the roms - configure must have been executed before"
+	@echo "  setup       - configure raspbian: ssh keys, updates, locales, ..."
+	@echo "  configure   - configure retropie: inputs, emulators, paths, external hdd, ..."
+	@echo "  scrape      - scrape the roms - configure must have been executed before"
 
 all: setup configure
 
