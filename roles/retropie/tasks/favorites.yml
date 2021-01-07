@@ -1,0 +1,16 @@
+---
+
+- name: Install xmlstarlet
+  apt:
+    pkg:
+    - xmlstarlet
+
+- name: copy favorite.sh
+  copy:
+    src: "{{ role_path }}/files/favorite.sh"
+    dest: "{{ retropie_home }}/favorite.sh"
+
+- name: Configure favorites
+  command: "/bin/sh {{ retropie_home }}/favorite.sh '{{ item.name }}' '{{ retropie_roms }}/{{ item.platform }}/gamelist.xml'"
+  with_items:
+    - { platform: 'nes', name: 'Lawn Mower' }
