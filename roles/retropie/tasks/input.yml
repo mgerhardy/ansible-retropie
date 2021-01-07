@@ -4,3 +4,7 @@
   copy:
     src: "{{ role_path }}/files/es_input.cfg"
     dest: "{{ emulationstation_config_path }}/es_input.cfg"
+
+- name: Run input configuration
+  command:
+    cmd: {{ retropie_path }}/supplementary/emulationstation/scripts/inputconfiguration.sh
