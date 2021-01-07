@@ -13,7 +13,7 @@
     path: /etc/fstab
     state: present
     block: |
-      {{ external_hdd_device }} {{ external_hdd_mount_path }} fuseblk rw,nosuid,nodev,noatime,nobootwait,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096 0 0
+      {{ external_hdd_device }} {{ external_hdd_mount_path }} fuseblk rw,nosuid,nodev,noatime,nobootwait,nofail,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096 0 0
   when: hdd_device.stat.isblk is defined and hdd_device.stat.isblk
   register: fstab
 
