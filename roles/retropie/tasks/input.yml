@@ -7,4 +7,4 @@
 
 - name: Run input configuration
   command:
-    cmd: {{ retropie_path }}/supplementary/emulationstation/scripts/inputconfiguration.sh
+    cmd: "{{ retropie_path }}/supplementary/emulationstation/scripts/inputconfiguration.sh"
