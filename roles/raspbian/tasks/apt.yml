@@ -7,6 +7,8 @@
   apt:
     pkg:
     - apt-transport-https
+    - ntfs-3g
+    - exfat-fuse
 
 - name: install unattended-upgrades
   apt:

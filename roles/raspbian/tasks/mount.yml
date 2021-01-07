@@ -8,6 +8,13 @@
   register: uuid_external_hdd_device
   when: hdd_device.stat.isblk is defined and hdd_device.stat.isblk
 
+- name: "Create directory for external hdd mount point at {{ external_hdd_mount_path }}"
+  file:
+    path: "{{ external_hdd_mount_path }}"
+    state: directory
+    mode: '0755'
+  when: hdd_device.stat.isblk is defined and hdd_device.stat.isblk
+
 - name: Register external hdd
   blockinfile:
     path: /etc/fstab
@@ -17,6 +24,10 @@
   when: hdd_device.stat.isblk is defined and hdd_device.stat.isblk
   register: fstab
 
-- name: 'If {{ external_hdd_mount_path }} changed, remount'
+- name: '/etc/fstab changed, mount everything'
+  command: mount -a
+  when: fstab.changed
+
+- name: '/etc/fstab changed, remount {{ external_hdd_mount_path }}'
   command: mount -o remount {{ external_hdd_mount_path }}
   when: fstab.changed
