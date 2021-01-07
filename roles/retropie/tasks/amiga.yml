@@ -1,0 +1,32 @@
+---
+
+- name: Creates BIOS directory
+  file:
+    path: "{{ retropie_home }}/BIOS"
+    state: directory
+
+- name: copy amiga bios
+  copy:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "{{ retropie_home }}/BIOS/{{ item }}"
+  with_items:
+    - kick12.rom
+    - kick13.rom
+    - kick20.rom
+    - kick30.rom
+    - kick31.rom
+
+# http://www.whdload.de/docs/de/need.html
+- name: rom symlinks
+  file:
+    src: "{{ retropie_home }}/BIOS//{{ item.src }}"
+    dest: "{{ retropie_home }}/BIOS/{{ item.dest }}"
+    state: link
+  with_items:
+    - { src: kick12.rom, dest: kick33180.A500 }
+    - { src: kick12.rom, dest: amiga-os-120.rom }
+    - { src: kick13.rom, dest: kick34005.A500 }
+    - { src: kick13.rom, dest: kick130.rom }
+    - { src: kick13.rom, dest: amiga-os-130.rom }
+    - { src: kick31.rom, dest: kick40068.A4000 }
+    - { src: kick31.rom, dest: kick310.rom }

@@ -1,0 +1,22 @@
+- name: "Check external hdd"
+  stat:
+    path: "{{ external_hdd_device }}"
+  register: hdd_device
+
+- name: Get uuid of external hdd
+  command: blkid -s UUID -o value {{ external_hdd_device }}
+  register: uuid_external_hdd_device
+  when: hdd_device.stat.isblk is defined and hdd_device.stat.isblk
+
+- name: Register external hdd
+  blockinfile:
+    path: /etc/fstab
+    state: present
+    block: |
+      {{ external_hdd_device }} {{ external_hdd_mount_path }} fuseblk rw,nosuid,nodev,noatime,nobootwait,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096 0 0
+  when: hdd_device.stat.isblk is defined and hdd_device.stat.isblk
+  register: fstab
+
+- name: 'If {{ external_hdd_mount_path }} changed, remount'
+  command: mount -o remount {{ external_hdd_mount_path }}
+  when: fstab.changed

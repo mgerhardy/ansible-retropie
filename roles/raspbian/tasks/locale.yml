@@ -1,0 +1,4 @@
+- name: Configure locale
+  locale_gen:
+    name: "{{ retropie_locale }}"
+    state: present

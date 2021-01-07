@@ -1,0 +1,8 @@
+---
+
+- hosts: retropie
+  gather_facts: no
+  become: yes
+  roles:
+    - { role: retropie }
+    - { role: scrape }

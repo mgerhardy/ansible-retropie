@@ -1,0 +1,51 @@
+---
+
+- name: Get all platforms
+  become: no
+  shell: "find . -maxdepth 1 -mindepth 1 -type d -exec basename {} \\;"
+  args:
+    chdir: "{{ retropie_roms }}"
+  register: rom_platforms
+
+- name: Execute skyscraper
+  become: no
+  shell: "{{ skyscraper }} -s {{ skyscraper_scraper }} -d {{ skyscraper_cache_basepath }}/{{ item }} -i {{ retropie_roms }}/{{ item }} -g {{ retropie_roms }}/{{ item }} -o {{ retropie_roms }}/{{ item }}/media -p {{ item }}"
+  args:
+    chdir: "{{ retropie_roms }}"
+  vars:
+    ansible_ssh_pipelining: no
+  with_items: "{{ rom_platforms.stdout_lines }}"
+
+- name: Get running processes
+  shell: "ps -ef | grep -v grep | grep -w emulationstation | awk '{print $2}'"
+  register: running_processes
+
+- name: Kill running processes
+  shell: "kill {{ item }}"
+  with_items: "{{ running_processes.stdout_lines }}"
+
+- name: Wait for emulationstation to quit
+  wait_for:
+    path: "/proc/{{ item }}/status"
+    state: absent
+  with_items: "{{ running_processes.stdout_lines }}"
+  ignore_errors: yes
+  register: killed_processes
+
+- name: Force kill stuck processes
+  shell: "kill -9 {{ item }}"
+  with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
+
+- name: Update game list for emulationstation
+  become: no
+  shell: "{{ skyscraper }} -f emulationstation -d {{ skyscraper_cache_basepath }}/{{ item }} -i {{ retropie_roms }}/{{ item }} -g {{ retropie_roms }}/{{ item }} -o {{ retropie_roms }}/{{ item }}/media -p {{ item }}"
+  args:
+    chdir: "{{ retropie_roms }}"
+  vars:
+    ansible_ssh_pipelining: no
+  with_items: "{{ rom_platforms.stdout_lines }}"
+
+- name: Restart emulation station
+  systemd:
+    state: restarted
+    name: autologin@tty1.service

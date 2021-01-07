@@ -1,0 +1,10 @@
+- name: restart sshd
+  service:
+    name: ssh
+    state: restarted
+
+- name: update timezone
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+
+- name: reboot_raspi
+  reboot:

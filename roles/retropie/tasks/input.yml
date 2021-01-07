@@ -1,0 +1,6 @@
+---
+
+- name: copy emulation station input config
+  copy:
+    src: "{{ role_path }}/files/es_input.cfg"
+    dest: "{{ emulationstation_config_path }}/es_input.cfg"

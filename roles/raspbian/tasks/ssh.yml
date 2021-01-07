@@ -1,0 +1,10 @@
+---
+
+- name: upload authorized keys
+  authorized_key:
+    user: "{{ ansible_ssh_user }}"
+    key: "{{ item }}"
+    state: present
+  with_items:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGcXVWosczJ7R/Bh0WBBGgOhXJyp55c+vQlmxQDzV2aslWeXqJ5plJSPwAWvQHR1gZ9WOPEVJxOaYpkHtu6ssOkD3ziJqcEYWgZGTI+EkE1zUjf9oWFCWcDAzy80olUt1NrRhaunyzd5AdUlC5k+OlKi/3CDSNzNa/IStwcpcBfs/3Hozp3SPL8oyfQAHfXrAQb8frefaMcuj/n+kTRc3sn2DmWZ0RfEJbqn92FQlbY32cUftgeIwNzQh+VyQ1FIWxONvLx5vVw1M09UwcJIYpeMbN1aNB+w3+RNDWmqMojtSOaWOu6k+V6jT5E3bZoDcjd2vD7Oj6TTsKYaoLy9S5SwLV7F6OHRiv9LNkt23hJ2O5y1uuPvfUOgzqxgCyd8sFQqUGlhmdHrFt657rO6GVlWUow1m9ZgX+Et9hnkVONvE95OX3yRPvgOPwP1KZ2LraUbV9U0G7OTEqbt9AhfEnTk5UJioglc9JT5Xb1oSaiGKr5g+aehJdGuebtXNKzS0= mgerhardy@w541
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJQJHI1EU21B/cHgr1Gi5xJvvNpfCfzrXuE1WEAzY//CDLmqzGhj9WPa3NPz5w+BI4G37Bw6i0WN82QyHxg6cT5FY071zCyqS7wKftc0IvHUhL11t0gIu5PQgjCmmkfQpDX4aj5ZSPY10ednfNuTJRo5i2EBKcw4c1WCwlShVoV7RGtPSuqbeT4F3J0rrjsifus+6s+/rBSDKvHM478QHr1wPuFZ0WDdQhuZDldRMx96+RSDTfaI7L3GH6XjuvYsevZyf6WBFSGEM0VmGmfAh7QTkkB1GkSgmb05W60BcW1pKmwEpu8jqReolH3+9x7S1FgroJFTCH2mBn+gIiLr5KMLOVsyLNghoolIZlA/2zs7AML6Cn11KxQ3HfexwA38AwgixU3VCo7JNQ6chGnfT9q9S/4zY2ejarR4SilUrqfWm2kfC4WcZ+JN9QifpZ8OleuypTdPgL6ZKQ+aGs6MdWYcbzNBktRdnI6aLtQ5db8Js1T5HEagvuHtYhIxx4cw8= mgerhardy@mattn-desktop

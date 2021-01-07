@@ -1,0 +1,40 @@
+---
+
+- name: "Check stat for {{ retropie_home }}"
+  stat:
+    path: "{{ retropie_home }}"
+  register: home
+
+- name: "Check data dir mount"
+  stat:
+    path: "{{ external_hdd_mount_path }}"
+  register: usb
+
+- import_tasks: externalhdd.yml
+  when: usb.stat.isdir is defined and usb.stat.isdir and (home.stat.islnk is not defined or not home.stat.islnk)
+
+- name: Create saves directory
+  file:
+    path: "{{ retropie_home }}/saves"
+    state: directory
+    mode: '0755'
+
+- name: Create states directory
+  file:
+    path: "{{ retropie_home }}/states"
+    state: directory
+    mode: '0755'
+
+- name: Change save file directory
+  lineinfile:
+    path: "{{ retropie_path }}/configs/all/retroarch.cfg"
+    state: present
+    regexp: 'savefile_directory'
+    line: 'savefile_directory = "{{ retropie_home }}/saves"'
+
+- name: Change save state directory
+  lineinfile:
+    path: "{{ retropie_path }}/configs/all/retroarch.cfg"
+    state: present
+    regexp: 'savestate_directory'
+    line: 'savestate_directory = "{{ retropie_home }}/states"'

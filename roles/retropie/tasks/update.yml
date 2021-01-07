@@ -1,0 +1,59 @@
+---
+
+- name: Update the RetroPie-Setup script
+  become: true
+  git:
+    repo: https://github.com/RetroPie/RetroPie-Setup.git
+    dest: "{{ retropie_setup }}"
+    accept_hostkey: true
+    force: true
+    version: "master"
+
+- name: Install supplementary packages
+  become: true
+  shell: |
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} depends
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} sources
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} build
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} install
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} configure
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} clean
+  args:
+    creates: "{{ retropie_path }}/supplementary/{{ item }}"
+  with_items:
+    - skyscraper
+    - ps3controller
+    - xboxdrv
+
+- name: Install libretrocores packages
+  become: true
+  shell: |
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} depends
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} sources
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} build
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} install
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} configure
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} clean
+  args:
+    creates: "{{ retropie_path }}/libretrocores/{{ item }}"
+  with_items:
+    - lr-snes9x
+    - lr-puae
+    - lr-bsnes
+    - lr-mupen64plus-next
+    - lr-ppsspp
+    - lr-pcsx-rearmed
+
+- name: Install emulator packages
+  become: true
+  shell: |
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} depends
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} sources
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} build
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} install
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} configure
+    {{ retropie_setup }}/retropie_packages.sh {{ item }} clean
+  args:
+    creates: "{{ retropie_path }}/emulators/{{ item }}"
+  with_items:
+    - scummvm

@@ -1,0 +1,7 @@
+---
+
+- name: updating hostname
+  hostname:
+    name: "{{ retropie_hostname }}"
+  notify:
+    - reboot_raspi

@@ -1,0 +1,20 @@
+---
+
+- name: "Create data directory for RetroPie at {{ external_hdd_mount_path }}"
+  file:
+    path: "{{ external_hdd_mount_path }}/RetroPie"
+    state: directory
+    mode: '0755'
+
+- name: "Backup old {{ retropie_home }} state to {{ raspberry_home }}/retropie.tgz"
+  archive:
+    path: "{{ retropie_home }}"
+    dest: "{{ raspberry_home }}/retropie.tgz"
+  when: home.stat.isdir is defined and home.stat.isdir
+
+- name: "Create {{ retropie_home }} symlink"
+  file:
+    path: "{{ retropie_home }}"
+    src: "{{ external_hdd_mount_path }}/RetroPie"
+    state: link
+    mode: '0755'
