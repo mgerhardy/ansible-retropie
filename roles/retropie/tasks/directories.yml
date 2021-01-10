@@ -38,26 +38,3 @@
     state: present
     regexp: 'savestate_directory'
     line: 'savestate_directory = "{{ retropie_home }}/states"'
-
-- name: Change skyscraper cache path
-  lineinfile:
-    path: "{{ retropie_path }}/configs/all/skyscraper/config.ini"
-    state: present
-    regexp: 'cacheFolder'
-    line: 'cacheFolder="{{ skyscraper_cache_basepath }}"'
-
-- name: Change skyscraper import path
-  lineinfile:
-    path: "{{ retropie_path }}/configs/all/skyscraper/config.ini"
-    state: present
-    regexp: 'importFolder'
-    line: 'importFolder="{{ retropie_home }}/.skyscraper/import"'
-
-- name: Change skyscraper default language
-  lineinfile:
-    path: "{{ retropie_path }}/configs/all/skyscraper/config.ini"
-    state: present
-    regexp: 'lang='
-    line: 'lang="{{ scrape_lang }}"'
-
-## TODO: scummvm.ini in skyscraper

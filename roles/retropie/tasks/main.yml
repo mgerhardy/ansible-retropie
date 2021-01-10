@@ -2,6 +2,7 @@
 
 - import_tasks: update.yml
 - import_tasks: directories.yml
+- import_tasks: skyscraper.yml
 - import_tasks: favorites.yml
 - import_tasks: input.yml
 - import_tasks: amiga.yml

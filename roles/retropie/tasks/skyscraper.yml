@@ -1,0 +1,20 @@
+---
+
+- name: Change skyscraper cache path
+  lineinfile:
+    path: "{{ retropie_path }}/configs/all/skyscraper/config.ini"
+    state: present
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  with_items:
+    - { regexp: 'cacheFolder=', line: 'cacheFolder="{{ skyscraper_cache_basepath }}"' }
+    - { regexp: 'importFolder=', line: 'importFolder="{{ retropie_home }}/.skyscraper/import"' }
+    - { regexp: 'inputFolder=', line: 'inputFolder="{{ retropie_roms }}"' }
+    - { regexp: 'scummIni=', line: 'scummIni="{{ retropie_home }}/.skyscraper/import"' }
+    - { regexp: 'lang=', line: 'lang="{{ scrape_lang }}"' }
+    - { regexp: 'unattend=', line: 'unattend="true"' }
+    - { regexp: 'videos=', line: 'videos="true"' }
+    - { regexp: 'nobrackets=', line: 'nobrackets="true"' }
+    - { regexp: 'relative=', line: 'relative="true"' }
+    - { regexp: 'unpack=', line: 'unpack="true"' }
+    - { regexp: 'skipped=', line: 'skipped="false"' }
