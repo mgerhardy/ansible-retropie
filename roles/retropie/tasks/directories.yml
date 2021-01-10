@@ -44,7 +44,7 @@
     path: "{{ retropie_path }}/configs/all/skyscraper/config.ini"
     state: present
     regexp: 'cacheFolder'
-    line: 'cacheFolder="{{ retropie_home }}/.skyscraper/cache"'
+    line: 'cacheFolder="{{ skyscraper_cache_basepath }}"'
 
 - name: Change skyscraper import path
   lineinfile:
