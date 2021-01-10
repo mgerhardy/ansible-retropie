@@ -17,4 +17,5 @@
     - { regexp: 'nobrackets=', line: 'nobrackets="true"' }
     - { regexp: 'relative=', line: 'relative="true"' }
     - { regexp: 'unpack=', line: 'unpack="true"' }
+    - { regexp: 'videos=', line: 'videos="true"' }
     - { regexp: 'skipped=', line: 'skipped="false"' }
