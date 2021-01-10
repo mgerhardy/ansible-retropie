@@ -1,5 +1,11 @@
 ---
 
+- name: "Create import directory for skyscraper"
+  file:
+    path: "{{ retropie_home }}/.skyscraper/import"
+    state: directory
+    mode: '0755'
+
 - name: Change skyscraper cache path
   lineinfile:
     path: "{{ retropie_path }}/configs/all/skyscraper/config.ini"
@@ -10,7 +16,7 @@
     - { regexp: 'cacheFolder=', line: 'cacheFolder="{{ skyscraper_cache_basepath }}"' }
     - { regexp: 'importFolder=', line: 'importFolder="{{ retropie_home }}/.skyscraper/import"' }
     - { regexp: 'inputFolder=', line: 'inputFolder="{{ retropie_roms }}"' }
-    - { regexp: 'scummIni=', line: 'scummIni="{{ retropie_home }}/.skyscraper/import"' }
+    - { regexp: 'scummIni=', line: 'scummIni="/opt/retropie/configs/scummvm/scummvm.ini"' }
     - { regexp: 'lang=', line: 'lang="{{ scrape_lang }}"' }
     - { regexp: 'unattend=', line: 'unattend="true"' }
     - { regexp: 'videos=', line: 'videos="true"' }
